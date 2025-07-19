@@ -1,31 +1,37 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-int solve(vector<int> &arr, int n, int time){
+int solve(vector<int> &arr, int n, int time)
+{
+    sort(arr.begin(), arr.end());
     int ans = 0;
-    int left = 0;
-    int curr_time = 0;
-
-    for(int right=0; right<n; right++){
-        curr_time +=arr[right];
-
-        while(left<=right && curr_time > time){
-            curr_time -= arr[left];
-            left++;
+    int curr_time=0;
+    for (int i = 0; i < n; i++)
+    {
+        curr_time = time - arr[i];
+        if (curr_time < 0) return ans;
+        else if (curr_time ==0) {
+            ans++;
+            return ans;
         }
-        ans = max(ans, right-left+1);
+        else {
+            curr_time-=arr[i];
+            ans++;
+        }
     }
     return ans;
 }
 
-int main(){
+int main()
+{
     int n;
-    cin>>n;
+    cin >> n;
     int time;
-    cin>>time;
+    cin >> time;
     vector<int> arr(n);
-    for(int i=0; i<n; i++) cin>>arr[i];
-    cout<<solve(arr,n,time);
+    for (int i = 0; i < n; i++)
+        cin >> arr[i];
+    cout << solve(arr, n, time);
     return 0;
 }
